@@ -12,7 +12,18 @@
     "watch:dev": "cross-env HMR=true npm run build:dev -- --watch"
   },
   "dependencies": {
+    "bootstrap": "^4.4.1",
+    "jquery": "^3.5.0",
+    "lodash": "^4.17.15",
+    "mousetrap": "^1.6.5",
+    "popper.js": "^1.16.1",
+    "shortcuts": "^1.3.2",
     "vue": "^2.6.10",
+    "vuex": "^3.1.3",
+    "vuex-map-fields": "^1.4.0",
+    "vuex-persist": "^2.2.0",
+    "vuex-persistedstate": "^3.0.1",
+    "vuex-webextensions": "^1.3.0",
     "webextension-polyfill": "^0.4.0"
   },
   "devDependencies": {

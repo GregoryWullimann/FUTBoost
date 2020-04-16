@@ -13,6 +13,7 @@ const config = {
     background: "./background.js",
     content: "./content.js",
     "popup/popup": "./popup/popup.js",
+    "js/injected": "./js/injected.js",
   },
   output: {
     path: __dirname + "/dist",
@@ -67,6 +68,7 @@ const config = {
     }),
     new CopyWebpackPlugin([
       { from: "icons", to: "icons", ignore: ["icon.xcf"] },
+      { from: "images", to: "images" },
       {
         from: "popup/popup.html",
         to: "popup/popup.html",
