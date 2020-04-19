@@ -25,5 +25,5 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     m.parentNode.insertBefore(a, m);
 })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-ga('create', 'UA-163991898-Y', 'auto');
+ga('create', 'UA-163991898-1', 'auto');
 ga('set', 'checkProtocolTask', null); // Required: disables protocol checking.

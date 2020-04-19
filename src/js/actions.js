@@ -5,11 +5,11 @@ var switchCardView = function(){
 }
 
 var resetSearchFilter = function(){
-	clickItem(document.querySelector(".ut-market-search-filters-view .button-container.btn-standard"))
+	clickItem(document.querySelector(".ut-market-search-filters-view .button-container .btn-standard"))
 }
 
 var searchMarket = function(){
-	clickItem(document.querySelector(".ut-market-search-filters-view .btn-standard.call-to-action"))
+	clickItem(document.querySelector(".ut-market-search-filters-view .button-container .btn-standard.call-to-action"))
 }
 
 var buyNow = function(){
@@ -153,8 +153,8 @@ var loadPreset = function(v){
 	if(id > presets.length){
 		return;
 	}
-		var preset = presets[id-1];
-
+	var preset = presets[id-1];
+	var view = utils.getCurrentView();
 	var playerSelect = view.getPlayerNameSearch();
 	if(preset.player){
 		var entries = playerSelect._searchEngine.getEntriesForString(preset.player.name)
