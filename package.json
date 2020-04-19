@@ -1,7 +1,7 @@
 {
   "name": "FUTBoost",
   "version": "1.0.0",
-  "description": "UT Boost is the ultimate extension for the FUT Web App. The extension add many functionalty to simplify your life in the Web App, with tools like: rating filter, rarities filter, club summary, shortcuts actions, and more!",
+  "description": "FUT Boost is the ultimate extension for the FUT Web App. The extension add many functionalty to simplify your life in the Web App, with tools like: rating filter, rarities filter, club summary, shortcuts actions, and more!",
   "author": "Streaver",
   "license": "MIT",
   "scripts": {

@@ -18,9 +18,9 @@
     "default_title": "FUT Boost",
     "default_popup": "popup/popup.html"
   },
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://google-analytics.com; object-src 'self'",
   "web_accessible_resources": ["js/injected.js","images/*.png"],
   "permissions": [
-    "storage",
-    "tabs"
+    "storage"
   ]
 }
