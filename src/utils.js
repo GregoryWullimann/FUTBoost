@@ -290,7 +290,6 @@ var getChallangesPrices = function(id) {
 				}
 				costs[id] = cost
 			}		
-			console.log(costs);
 			setChallangesPrices(costs);
 		})
 	});
@@ -319,7 +318,7 @@ var getPlatform = function(){
 }
 
 var getCurrentController = function(){
-	return getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController();
+	return window.getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController();
 }
 
 var getCurrentView = function(){

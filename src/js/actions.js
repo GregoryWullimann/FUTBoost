@@ -191,28 +191,21 @@ var loadPreset = function(v){
 }
 
 var listItemMinBIN = function(){
-
 	Promise.resolve()
 	.then(() => {
 		listItem()
 	})
 	.then(wait(300)).then(() => {
-		try{
-			var currentController = utils.getCurrentController();
-			if(currentController.className == "ClubSearchResultsSplitViewController"){
-				var minBIN = currentController._childViewControllers[1]._childViewControllers[0]._quickListPanel._item._itemPriceLimits.minimum
-			}else if(currentController.className == "UTSBCSquadSplitViewController"){
-				var minBIN = currentController._childViewControllers[2]._childViewControllers[0]._childViewControllers[0]._item._itemPriceLimits.minimum
-			}else if(currentController.className == "UTUnassignedItemsSplitViewController"){
-				var minBIN = currentController._childViewControllers[0]._childViewControllers[0]._quickListPanel._item._itemPriceLimits.minimum
-			}
-
-			var nextBIN = minBIN <= 1000 ? minBIN + 50 : minBIN <= 10000 ? minBIN + 100 : minBIN <= 100000 ? minBIN + 500 : minBIN + 1000
-			var inputs = document.querySelectorAll(".panelActions input.numericInput")
-			inputs[0].value = minBIN;
-			inputs[1].value = nextBIN;
-		}catch{
+		var currentController = utils.getCurrentController();
+		if(currentController.className == "ClubSearchResultsSplitViewController"){
+			var subController = currentController._childViewControllers[1]._childViewControllers[0]
+		}else if(currentController.className == "UTSBCSquadSplitViewController"){
+			var subController = currentController._childViewControllers[2]._childViewControllers[0]._childViewControllers[0]
+		}else if(currentController.className == "UTUnassignedItemsSplitViewController"){
+			var subController = currentController._childViewControllers[0]._childViewControllers[0]
 		}
+		subController._quickListPanel._view._bidNumericStepper._currencyInput.setValue(100)
+		subController._quickListPanel._view._buyNowNumericStepper._currencyInput.setValue(100)
 	})
 	.then(wait(100)).then(() => {
 		clickItem(document.querySelector(".panelActions button.btn-standard.call-to-action"))
@@ -231,8 +224,6 @@ var makePriceBid = function(...[price]){
 }
 
 var listItemPrice = function(...[start, bin]){
-	console.log(start)
-	console.log(bin)
 	Promise.resolve()
 	.then(() => {
 		listItem()
@@ -258,7 +249,33 @@ var selectPrevItem = function(){
 	}
 }
 
+var openPack = function(id){
+	var packContainer = document.getElementById(id);
+	if(packContainer){
+		Promise.resolve()
+		.then(() => {
+			clickItem(packContainer.querySelector("button.coins"))
+		})
+		.then(wait(300)).then(() => {
+			confirmDialogBox();
+		})
+	}
+}
 
+var openBronzePack = function(){
+	Promise.resolve()
+	.then(() => {
+		var storeBtn = document.querySelector(".ut-tab-bar button.icon-store");
+		clickItem(storeBtn)
+	})
+	.then(wait(750)).then(() => {
+		var menu = document.querySelector(".menu-container");
+		var menuEl = menu.children;
+		clickItem(menuEl[menuEl.length-1])
+	}).then(wait(150)).then(() => {
+		openPack(100)
+	})
+}
 
 
 function wait(ms) {
@@ -322,5 +339,6 @@ export default {
 	selectPrevItem,
 	selectNextItem,
 	listItemPrice,
-	loadPreset
+	loadPreset,
+	openBronzePack
 };

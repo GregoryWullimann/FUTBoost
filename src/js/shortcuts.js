@@ -196,6 +196,12 @@ var shortcuts =  [
 	fullText: "Load preset 10",
 	shortcut: "0",
 	params: [{name: "", value: 10}]
+},
+{
+	id: 31,
+	f: "openBronzePack",
+	fullText: "Open Bronze Pack",
+	shortcut: "h"
 }
 ]
 

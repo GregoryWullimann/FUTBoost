@@ -177,27 +177,24 @@ var render = {
 				clearInterval(interval)
 			}
 		}, 200)
-
 	}
 }
 
-
-
-// document.addEventListener('keydown', (e) => {
-// 	if(e.target.nodeName.toLowerCase() === "input"){
-// 		return;
-// 	} 
-// 	if (!e.repeat && window.localStorage.getItem("FutBoost")){
-// 		var state = JSON.parse(window.localStorage.getItem("FutBoost"))
-// 		var shortcut = state.shortcuts.find(el => el.shortcut == e.key);
-// 		if(shortcut){
-// 			actions[shortcut.f](...(shortcut.params ? shortcut.params : []));
-// 		}
-// 	}
-// });
-
 var nav = new Navigation();
 nav.init()
+
+
+document.addEventListener('keydown', (e) => {
+	if(e.target.nodeName.toLowerCase() === "input"){
+		return;
+	} 
+	if (!e.repeat && store.state.shortcuts){
+		var shortcut = store.state.shortcuts.find(el => el.shortcut == e.key);
+		if(shortcut){
+			actions[shortcut.f](...(shortcut.params ? shortcut.params : []));
+		}
+	}
+});
 
 // By overring the XMLHttpRequest.open method it is possible to control the XHR responses
 var old_Open = window.XMLHttpRequest.prototype.open;
