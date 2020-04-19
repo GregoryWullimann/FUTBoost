@@ -61,7 +61,7 @@
 				services.Notification.queue([`Preset ${this.id} saved`, enums.UINotificationType.NEUTRAL])
 			},
 			load() {
-				actions.loadPreset(this.id);
+				actions.loadPreset({value: this.id});
 
 			}
 		},

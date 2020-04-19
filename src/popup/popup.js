@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './App'
+import Popup from './Popup.vue'
 import shortcuts from './../js/shortcuts.js';
 import Vuex from 'vuex';
 import createPersistedState from "vuex-persistedstate";
@@ -10,7 +10,6 @@ global.browser = require('webextension-polyfill')
 Vue.prototype.$browser = global.browser
 
 
-
 const store = new Vuex.Store({
 	state: {
 		shortcuts: shortcuts,
@@ -19,13 +18,9 @@ const store = new Vuex.Store({
 		getField,
 	},
 	mutations: {
-		changeShortcut (state, n) {
-			var item = state.shortcuts.find((x) => x.id == n.id);
-			item.shortcut = n.shortcut
-
-			state.shortcuts = [item,
-			...state.shortcuts.filter(element => element.id !== n.id)
-			]
+		changeShortcut (state, data) {
+			var index = state.shortcuts.findIndex((x) => x.id == data.id);
+			Vue.set(state.shortcuts, index, data)
 			
 			chrome.storage.local.set({shortcuts: state.shortcuts});
 		},
@@ -38,5 +33,5 @@ const store = new Vuex.Store({
 new Vue({
 	el: '#app',
 	store,
-	render: h => h(App)
+	render: h => h(Popup)
 })

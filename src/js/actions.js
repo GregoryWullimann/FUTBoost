@@ -153,8 +153,8 @@ var loadPreset = function(v){
 	if(id > presets.length){
 		return;
 	}
-	var preset = presets[id-1];
-	var view = utils.getCurrentView();
+		var preset = presets[id-1];
+
 	var playerSelect = view.getPlayerNameSearch();
 	if(preset.player){
 		var entries = playerSelect._searchEngine.getEntriesForString(preset.player.name)
