@@ -1,7 +1,7 @@
 {
-  "name": "my-extension",
+  "name": "FUTBoost",
   "version": "1.0.0",
-  "description": "A Vue.js web extension",
+  "description": "UT Boost is the ultimate extension for the FUT Web App. The extension add many functionalty to simplify your life in the Web App, with tools like: rating filter, rarities filter, club summary, shortcuts actions, and more!",
   "author": "Streaver",
   "license": "MIT",
   "scripts": {
@@ -23,6 +23,7 @@
     "vuex-map-fields": "^1.4.0",
     "vuex-persist": "^2.2.0",
     "vuex-persistedstate": "^3.0.1",
+    "vuex-shared-mutations": "^1.0.2",
     "vuex-webextensions": "^1.3.0",
     "webextension-polyfill": "^0.4.0"
   },
