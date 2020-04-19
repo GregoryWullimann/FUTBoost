@@ -1,6 +1,6 @@
 {
-  "name": "FUTEnhancer",
-  "description": "FUTEnhancer is the ultimate extension for the FUT Web App. The extension add many functionalty to simplify your life in the Web App, with tools like: rating filter, rarities filter, club summary, shortcuts actions, and more!",
+  "name": "FUT Boost",
+  "description": "FUT Boost is the ultimate extension for the FUT Web App. The extension add many functionalty to simplify your life in the Web App, with tools like: rating filter, rarities filter, club summary, shortcuts actions, and more!",
   "version": null,
   "manifest_version": 2,
   "icons": {
@@ -15,11 +15,12 @@
     }
   ],
   "browser_action": {
-    "default_title": "FUTEnhancer",
+    "default_title": "FUT Boost",
     "default_popup": "popup/popup.html"
   },
   "web_accessible_resources": ["js/injected.js","images/*.png"],
   "permissions": [
-    "storage"
+    "storage",
+    "tabs"
   ]
 }

@@ -1,5 +1,5 @@
 <template>
-	<div class="search-prices">
+	<div class="search-prices">		
 		<div class="search-price-header" id="customElement">
 			<h1>Rarity:</h1>
 			<button class="flat camel-case" @click="raritiesFilter.map(x => { x.show = selectAll; return x }); selectAll = !selectAll">
@@ -35,15 +35,11 @@
 		methods: {
 		},
 		computed: {
-			raritiesSorted: function () {
-				var tmp = this.raritiesFilter.slice(0, this.raritiesFilter.length);
-				return tmp.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
-			},
 			firstHalf: function () {
-				return this.raritiesSorted.slice(0, Math.ceil(this.raritiesSorted.length / 2))
+				return this.raritiesFilter.slice(0, Math.ceil(this.raritiesFilter.length / 2))
 			},	
 			secondHalf: function () {
-				return this.raritiesSorted.slice(Math.ceil(this.raritiesSorted.length / 2), this.raritiesSorted.length)
+				return this.raritiesFilter.slice(Math.ceil(this.raritiesFilter.length / 2), this.raritiesFilter.length)
 			},
 			...mapFields([
 				'raritiesFilter'

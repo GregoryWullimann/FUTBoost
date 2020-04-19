@@ -1,12 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { getField, updateField } from 'vuex-map-fields';
-import VuexWebExtensions from 'vuex-webextensions';
-import createPersistedState from "vuex-persistedstate";
 import utils from "./utils.js";
 import actions from "./js/actions.js";
 import shortcuts from "./js/shortcuts.js";
-
+import VuexWebExtensions from 'vuex-webextensions';
+import createPersistedState from "vuex-persistedstate";
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -17,17 +16,21 @@ const store = new Vuex.Store({
 		},
 		raritiesFilter: utils.rarities.filter((i) => i.valid),
 		playersData: [],
-		shortcuts: shortcuts
-	},
-	mutations: {
+		presets: [],
+		shortcuts: null,
+		user: 3,
+		count: 0
 	},
 	getters: {
 		getField,
 	},
 	mutations: {
-		updateField,
+		changeShortcuts (state, newShortcuts) {
+			state.shortcuts = newShortcuts
+		},
+		updateField
 	},
-	plugins: [createPersistedState({ storage: window.localStorage })],
+	plugins: [createPersistedState({key: 'FutBoost'})],
 })
 
 export default store

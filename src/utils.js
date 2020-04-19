@@ -89,6 +89,35 @@ if(typeof components !== 'undefined'){
 		var i = this._infoStateViewModel && this._canShowSecondaryViews ? this._infoStateViewModel.getState() : enums.UIItemInfoState.MAIN;
 		this.setItemInfoState(i)
 	}
+
+	components.ListRowItem.prototype.render = function render() {
+		utils.Debug.Assert(utils.JS.isValid(this.data), "Missing item data in list row component.");
+		var e = this.getData()
+		, t = utils.JS.isValid(this._itemComponent);
+		t && this._itemComponent.canRender(e) || (t && this._itemComponent.destroy(),
+			this._itemComponent = factories.ItemView.createSmallItem(e),
+			this._itemComponent.init(),
+			this.__entityContainer.insertBefore(this._itemComponent.getRootElement(), this.__entityContainer.firstChild)),
+		this.renderItemData(),
+		this._itemComponent.render(e),
+		this.renderName(),
+		utils.JS.isValid(this._dataComponent) && this._viewDirty && (this._dataComponent.destroy(),
+			this._dataComponent = null),
+		utils.JS.isValid(this._dataComponent) ? this._updateDataComponent(this._dataComponent, this.data, this.comparisonData, this.slotData) : this.setDataComponent(this._generateDataComponent(this.data, this.comparisonData, this.slotData)),
+		utils.JS.isValid(this._activeTagComponent) || this.setActiveTagComponent(this._generateActiveTagComponent(this.data)),
+		utils.JS.isValid(this.slotData) && !this.slotData.isValid() && this.data.isPlayer() && (this.__name.textContent = enums.Localization.BLANK_STR),
+		utils.JS.isValid(this._dataComponent) && (this.__entityContainer.appendChild(this._dataComponent.getRootElement()),
+			this._dataComponent.render(e)),
+		utils.JS.isValid(this._activeTagComponent) && (this.addClass(enums.UIListRowState.IS_ACTIVE_SQUAD),
+			this.__rowContent.appendChild(this._activeTagComponent.getRootElement()),
+			this._activeTagComponent.render(e)),
+		this._highlightUnassignedBought();
+		if(this.data.resourceId == 0){
+			this.__root.style.display = "none";
+		}
+		this._viewDirty = !1,
+		this.onTimedUpdate()
+	}
 }
 if(typeof UTSBCChallengeTileView !== 'undefined'){
 	UTSBCChallengeTileView.prototype.render = function render() {
@@ -293,6 +322,10 @@ var getCurrentController = function(){
 	return getAppMain().getRootViewController().getPresentedViewController().getCurrentViewController().getCurrentController();
 }
 
+var getCurrentView = function(){
+	return getCurrentController().getView();
+}
+
 
 export default { 
 	rarities, 
@@ -305,5 +338,6 @@ export default {
 	getChallangesPrices,
 	getPlatform,
 	getPlayersPrice,
-	getCurrentController
+	getCurrentController,
+	getCurrentView,
 };

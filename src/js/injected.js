@@ -2,14 +2,15 @@ import Vue from 'vue'
 import RatingFilter from './../components/RatingFilter.vue'
 import RarityFilter from './../components/RarityFilter.vue'
 import ClubSummary from './../components/ClubSummary.vue'
+import FilterPreset from './../components/FilterPreset.vue'
 import utils from "./../utils.js";
 import store from './../store';
+import actions from "./actions.js";
 
 global.browser = require('webextension-polyfill')
 Vue.prototype.$browser = global.browser
 
 window.store = store; 
-
 
 class Navigation {
 	constructor() {
@@ -58,7 +59,6 @@ var render = {
 		}, 200)
 	},
 	UTSBCChallengesViewController: function(){
-		console.log("here")
 		var interval = setInterval(() => {
 			var container = document.querySelector(".SBCChallenges");
 			utils.getChallangesPrices(container.id);
@@ -76,6 +76,22 @@ var render = {
 		}
 		var mainNavigation = document.querySelector(".ut-tab-bar-view.game-navigation");
 		var container = mainNavigation.querySelector(".search-prices");
+
+
+
+		for (var i = 10; i > 0; i--) {
+			var ratingFilterDiv = document.createElement('div');
+			ratingFilterDiv.id = "preset1";
+			container.parentNode.insertBefore(ratingFilterDiv, container.nextSibling);
+			new Vue({
+				el: "#preset1",
+				store,
+				render: h => h(FilterPreset, { 
+					props: { id: i }
+				}),
+			})
+		}
+
 
 		var rarityFilterDiv = document.createElement('div');
 		rarityFilterDiv.id = "rarityFilter";
@@ -118,7 +134,7 @@ var render = {
 
 			container.querySelector(".ut-navigation-container-view--content").style.position ="unset"
 			container.querySelector(".ut-content").style.background = "#f2f2f2"
-			
+
 			var headerContainer = container.querySelector(".ut-list-header");
 			if(!headerContainer){
 				return;
@@ -165,16 +181,20 @@ var render = {
 	}
 }
 
-document.addEventListener('keydown', (e) => {
-	if (!e.repeat){
-		var shortcut = window.store.state.shortcuts.find(el => el.shortcut == e.key);
-		console.log(shortcut)
-		if(shortcut){
-			shortcut.f(...(shortcut.params ? shortcut.params : []));
-		}
-	}
 
-});
+
+// document.addEventListener('keydown', (e) => {
+// 	if(e.target.nodeName.toLowerCase() === "input"){
+// 		return;
+// 	} 
+// 	if (!e.repeat && window.localStorage.getItem("FutBoost")){
+// 		var state = JSON.parse(window.localStorage.getItem("FutBoost"))
+// 		var shortcut = state.shortcuts.find(el => el.shortcut == e.key);
+// 		if(shortcut){
+// 			actions[shortcut.f](...(shortcut.params ? shortcut.params : []));
+// 		}
+// 	}
+// });
 
 var nav = new Navigation();
 nav.init()

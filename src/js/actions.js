@@ -146,6 +146,50 @@ var listItem = function(){
 	}
 }
 
+var loadPreset = function(v){
+	var presets = window.store.state.presets
+	var id = v.value
+
+	if(id > presets.length){
+		return;
+	}
+	var preset = presets[id-1];
+	var view = utils.getCurrentView();
+	var playerSelect = view.getPlayerNameSearch();
+	if(preset.player){
+		var entries = playerSelect._searchEngine.getEntriesForString(preset.player.name)
+		var obj = entries.find((x) => x.id == preset.player.id)
+		playerSelect._ePlayerEntryClicked(obj, preset.player.name)
+	}
+	view._minBidPriceRow._currencyInput.setValue(preset.minBid)
+	view._maxBidPriceRow._currencyInput.setValue(preset.maxBid)
+	view._minBuyNowPriceRow._currencyInput.setValue(preset.minBIN)
+	view._maxBuyNowPriceRow._currencyInput.setValue(preset.maxBIN)
+	view._searchFilters._filters[0].getDropDownElement().selectedIndex = preset.quality
+	view._searchFilters._filters[0]._handleChange()
+	view._searchFilters._filters[1].getDropDownElement().selectedIndex = preset.position
+	view._searchFilters._filters[1]._handleChange()
+	view._searchFilters._filters[2].getDropDownElement().selectedIndex = preset.chemistry
+	view._searchFilters._filters[2]._handleChange()
+	view._searchFilters._filters[3].getDropDownElement().selectedIndex = preset.nationality
+	view._searchFilters._filters[3]._handleChange()
+
+	Promise.resolve()
+	.then(() => {
+		view._searchFilters._filters[4].getDropDownElement().selectedIndex = preset.league
+		view._searchFilters._filters[4]._handleChange()
+	})
+	.then(wait(200)).then(() => {
+		view._searchFilters._filters[5].getDropDownElement().selectedIndex = preset.club
+		view._searchFilters._filters[5]._handleChange()
+	})
+
+	for (var i = 0; i < window.store.state.raritiesFilter.length; i++) {
+		window.store.state.raritiesFilter[i].show = preset.rarities[i]
+	}
+	services.Notification.queue([`Preset ${id} loaded`, enums.UINotificationType.NEUTRAL])
+}
+
 var listItemMinBIN = function(){
 
 	Promise.resolve()
@@ -277,5 +321,6 @@ export default {
 	makePriceBid,
 	selectPrevItem,
 	selectNextItem,
-	listItemPrice
+	listItemPrice,
+	loadPreset
 };
