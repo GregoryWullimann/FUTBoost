@@ -277,6 +277,66 @@ var openBronzePack = function(){
 	})
 }
 
+function buildBronzeSBC(){
+	Promise.resolve()
+	.then(() => {
+		clickItem(document.getElementById("6"))
+	})
+	.then(wait(300)).then(() => {
+		fillSBC();
+	})
+}
+
+function fillSBC(){
+	Promise.resolve()
+	.then(() => {
+		var buildSquadBtn = document.querySelectorAll(".btn-standard")[1];
+		clickItem(buildSquadBtn)
+	})
+	.then(wait(500)).then(() => {
+		var leagueDropDown = findElementWithText(document.querySelectorAll(".ut-search-filter-control--row"), "league")
+		clickItem(leagueDropDown)
+	})
+	.then(wait(250)).then(() => {
+		var dropDownItems = document.querySelectorAll(".inline-list li");
+		var validLeagues = ["EFL League One (ENG 3)", "EFL League Two (ENG 4)", "Domino’s Ligue 2 (FRA 2)", "Calcio B (ITA 2)", "Bundesliga 2 (GER 2)", "3. Liga (GER 3)", "LaLiga SmartBank (ESP 2)", "3F Superliga (DEN 1)", "Allsvenskan (SWE 1)", "Eliteserien (NOR 1)", "Finnliiga (FIN 1)", "Hellas Liga (GRE 1)", "Hyundai A-League (AUS 1)", "K-League 1 (KOR 1)", "League of Russia (RUS 1)", "LIGA BBVA MX (MEX 1)", "Liga Hrvatska (CRO 1)", "Liga I (ROM 1)", "Meiji Yasuda J1 (JPN 1)", "PKO Ekstraklasa (POL 1)", "Pro League (BEL 1)", "RSL (SUI 1)", "Scottish Prem (SPFL)", "SSE Airtricity Lge (IRL 1)", "United Emirates League (UAE 1)", "Ö. Bundesliga (AUT 1)", "Česká Liga (CZE 1)"]
+		var r = Math.floor(Math.random() * Math.floor(validLeagues.length));
+		var randomLeagueName = validLeagues[r];
+		var el = findElementWithText(dropDownItems, randomLeagueName.toLowerCase())
+		clickItem(el)
+	}).then(wait(250)).then(() => {
+		var buildMainBtn = document.querySelector(".btn-standard.call-to-action");
+		clickItem(buildMainBtn)
+	});
+}
+
+function findElementWithText(e, text){
+	return Array.from(e).find(el => el.textContent.toLowerCase().includes(text));
+}
+
+function moveFromBenchSBC(){
+	var currentController = utils.getCurrentController()
+	var sbcController = currentController._leftController
+	var players = sbcController._squad._players
+	for(var i = 11; i < players.length; i++){
+		if(players[i].item.id == 0){
+			continue;
+		}
+		for(var j = 0; j < 11; j++){
+			if(players[j].item.id == 0){
+				var tmp = players[j].item
+				players[j].item = players[i].item;
+				players[i].item = tmp;
+				break;
+			}
+		}
+	}
+
+	sbcController._squad._players = players
+	sbcController.applyDataChange()
+	services.SBC.saveChallenge(sbcController._challenge).observe(sbcController, sbcController._onSBCSaveComplete)
+	currentController.viewDidAppear()
+}
 
 function wait(ms) {
 	var r = Math.random() * ((ms+100) - ms) + ms;
