@@ -24,7 +24,7 @@ const store = new Vuex.Store({
 	},
 	mutations: {
 		changeShortcuts (state, newShortcuts) {
-			state.shortcuts = newShortcuts
+			state.shortcuts = [...newShortcuts]
 		},
 		updateField
 	},

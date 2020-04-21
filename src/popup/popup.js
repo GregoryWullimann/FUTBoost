@@ -26,9 +26,18 @@ const store = new Vuex.Store({
 		},
 		updateField
 	},
-	plugins: [createPersistedState({key: 'FutBoost'})],
+	plugins: [createPersistedState(
+	{
+		key: 'FutBoost',
+		arrayMerger: function (store, saved) { 
+			var newShortcuts = store.filter(o=> !saved.some(i=> i.id === o.id));
+			return saved.concat(newShortcuts)
+		}
+	}
+	)],
 })
 
+chrome.storage.local.set({shortcuts: store.state.shortcuts});
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',

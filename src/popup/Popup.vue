@@ -117,6 +117,7 @@
 			};
 		},
 		created: function () {
+			console.log(this.shortcuts)
 			chrome.storage.local.set({shortcuts: this.shortcuts});
 		},
 		computed: {

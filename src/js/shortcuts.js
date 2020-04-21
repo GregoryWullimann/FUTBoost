@@ -202,6 +202,24 @@ var shortcuts =  [
 	f: "openBronzePack",
 	fullText: "Open Bronze Pack",
 	shortcut: "h"
+},
+{
+	id: 32,
+	f: "buildBronzeSBC",
+	fullText: "Build Bronze SBC",
+	shortcut: "q"
+},
+{
+	id: 34,
+	f: "buildSilverSBC",
+	fullText: "Build Silver SBC",
+	shortcut: "t"
+},
+{
+	id: 33,
+	f: "fillSBC",
+	fullText: "Fill SBC",
+	shortcut: "w"
 }
 ]
 

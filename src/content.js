@@ -8,6 +8,7 @@ document.documentElement.appendChild(e)
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
 	chrome.storage.local.get({shortcuts: 'defaultValue'}, (items) => {
+        console.log("changed")
 		store.commit("changeShortcuts", items.shortcuts)
 	});
 });

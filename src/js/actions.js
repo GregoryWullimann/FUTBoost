@@ -279,7 +279,17 @@ function buildBronzeSBC(){
 	.then(() => {
 		clickItem(document.getElementById("6"))
 	})
-	.then(wait(300)).then(() => {
+	.then(wait(500)).then(() => {
+		fillSBC();
+	})
+}
+
+function buildSilverSBC(){
+	Promise.resolve()
+	.then(() => {
+		clickItem(document.getElementById("7"))
+	})
+	.then(wait(500)).then(() => {
 		fillSBC();
 	})
 }
@@ -304,6 +314,8 @@ function fillSBC(){
 	}).then(wait(250)).then(() => {
 		var buildMainBtn = document.querySelector(".btn-standard.call-to-action");
 		clickItem(buildMainBtn)
+	}).then(wait(250)).then(() => {
+		moveFromBenchSBC()
 	});
 }
 
@@ -316,11 +328,11 @@ function moveFromBenchSBC(){
 	var sbcController = currentController._leftController
 	var players = sbcController._squad._players
 	for(var i = 11; i < players.length; i++){
-		if(players[i].item.id == 0){
+		if(players[i].item.id == 0 || players[i].item.rareflag == 94){
 			continue;
 		}
 		for(var j = 0; j < 11; j++){
-			if(players[j].item.id == 0){
+			if(players[j].item.id == 0 || players[i].item.rareflag == 94){
 				var tmp = players[j].item
 				players[j].item = players[i].item;
 				players[i].item = tmp;
@@ -397,5 +409,8 @@ export default {
 	selectNextItem,
 	listItemPrice,
 	loadPreset,
-	openBronzePack
+	openBronzePack,
+	fillSBC,
+	buildBronzeSBC,
+	buildSilverSBC
 };
