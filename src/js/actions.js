@@ -61,7 +61,7 @@ var quickSellAll = function(){
 }
 
 var comparePrice = function(){
-	var btnGroup = document.querySelectorAll(".ut-button-group button");
+	var btnGroup = document.querySelectorAll(".DetailPanel .ut-button-group button");
 	// Market search
 	if(btnGroup.length == 2){
 		clickItem(btnGroup[1])
@@ -78,10 +78,14 @@ var comparePrice = function(){
 }
 
 var storeItem = function(){
-	var btnGroup = document.querySelectorAll(".ut-button-group button");
+	var btnGroup = document.querySelectorAll(".DetailPanel .ut-button-group button");
 	// SBC Builder
 	if(btnGroup.length == 9){
-		clickItem(btnGroup[7])
+		if(btnGroup[1].textContent.toLowerCase().includes("redeem coins")){
+			clickItem(btnGroup[1])
+		}else{
+			clickItem(btnGroup[7])
+		}
 		// Club search, Transfer list
 	}else if(btnGroup.length == 10){
 		clickItem(btnGroup[5])
@@ -92,24 +96,17 @@ var storeItem = function(){
 }
 
 var sendToTransfer = function(){
-	var btnGroup = document.querySelectorAll(".ut-button-group button");
-	// Market search
-	if(btnGroup.length == 2){
-		clickItem(btnGroup[1])
-		// SBC Builder
-	}else if(btnGroup.length == 9){
-		clickItem(btnGroup[4])
-		// Club search, Transfer list
-	}else if(btnGroup.length == 10){
+	var btnGroup = document.querySelectorAll(".DetailPanel .ut-button-group button");
+	// SBC Builder
+	if(btnGroup.length == 9){
 		clickItem(btnGroup[7])
-		// Pack content
-	}else if(btnGroup.length == 11){
-		clickItem(btnGroup[8])
+	}else if(btnGroup.length == 10){
+		clickItem(btnGroup[5])
 	}
 }
 
 var quickSell = function(){
-	var btnGroup = document.querySelectorAll(".ut-button-group button");
+	var btnGroup = document.querySelectorAll(".DetailPanel .ut-button-group button");
 	var btn;
 	// SBC Builder
 	if(btnGroup.length == 9){
@@ -133,7 +130,7 @@ var quickSell = function(){
 
 
 var listItem = function(){
-	var btnGroup = document.querySelectorAll(".ut-button-group button");
+	var btnGroup = document.querySelectorAll(".DetailPanel .ut-button-group button");
 	// SBC Builder
 	if(btnGroup.length == 9){
 		clickItem(btnGroup[0])

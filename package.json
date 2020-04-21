@@ -2,7 +2,7 @@
   "name": "FUTBoost",
   "version": "1.0.1",
   "description": "FUT Boost is the ultimate extension for the FUT Web App. The extension adds many functionality to simplify your life in the Web App, with tools like: rating filter, rarities filter, club summary, shortcuts actions, and more!",
-  "author": "Streaver",
+  "author": "Gregory Wullimann",
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --hide-modules",

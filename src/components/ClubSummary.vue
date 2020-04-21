@@ -72,9 +72,6 @@
 			totalSize: function(){
 				return _.sumBy(this.data, 'size');
 			},
-			sortedData: function(){
-				return  ;
-			},
 			...mapFields([
 				'playersData'
 				]),

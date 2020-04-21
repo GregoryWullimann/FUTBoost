@@ -17,9 +17,7 @@ const store = new Vuex.Store({
 		raritiesFilter: utils.rarities.filter((i) => i.valid),
 		playersData: [],
 		presets: [],
-		shortcuts: null,
-		user: 3,
-		count: 0
+		shortcuts: null
 	},
 	getters: {
 		getField,
@@ -30,7 +28,10 @@ const store = new Vuex.Store({
 		},
 		updateField
 	},
-	plugins: [createPersistedState({key: 'FutBoost'})],
+	plugins: [createPersistedState({
+		paths: ['ratingsFilter', 'raritiesFilter', 'shortcuts', 'presets'],
+		key: 'FutBoost'
+	})],
 })
 
 export default store

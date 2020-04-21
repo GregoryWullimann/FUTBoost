@@ -38,7 +38,9 @@ class Navigation {
 				this.previousController = newController ? this.currentController : this.previousController;
 				this.currentController = getCurrentController.className;
 				if(newController){
-					render[this.currentController](this.previousController);
+					if(render[this.currentController]){
+						render[this.currentController](this.previousController);
+					}
 				}
 			});
 			this.observer.observe(mainNavigation, { attributes: true, childList: true, subtree: true });
