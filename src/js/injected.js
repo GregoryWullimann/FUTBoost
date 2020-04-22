@@ -6,6 +6,7 @@ import FilterPreset from './../components/FilterPreset.vue'
 import utils from "./../utils.js";
 import store from './../store';
 import actions from "./actions.js";
+import futCode from "./futCode.js";
 
 global.browser = require('webextension-polyfill')
 Vue.prototype.$browser = global.browser
@@ -78,9 +79,6 @@ var render = {
 		}
 		var mainNavigation = document.querySelector(".ut-tab-bar-view.game-navigation");
 		var container = mainNavigation.querySelector(".search-prices");
-
-
-
 		for (var i = 10; i > 0; i--) {
 			var ratingFilterDiv = document.createElement('div');
 			ratingFilterDiv.id = "preset1";
@@ -93,8 +91,6 @@ var render = {
 				}),
 			})
 		}
-
-
 		var rarityFilterDiv = document.createElement('div');
 		rarityFilterDiv.id = "rarityFilter";
 		container.parentNode.insertBefore(rarityFilterDiv, container.nextSibling);
@@ -120,6 +116,24 @@ var render = {
 	UTWatchListSplitViewController: function(){
 	},
 	UTStoreViewController: function(){
+		var currentView = utils.getCurrentView()
+		currentView.addTarget(this, (x) => { 
+			if(currentView._navigation.getActiveTab() == "mypacks"){
+				return;
+			}
+			var packs = utils.getCurrentController()._viewmodel._packs._collection
+			var packContainers = document.querySelectorAll(".ut-store-pack-details-view");
+			for (var i = 0; i < packContainers.length; i++) {
+				var pack = packs[packContainers[i].id]
+				if(pack){
+					var purchased = new Intl.NumberFormat('en-UK').format(pack.purchaseCount)
+					var totalCost = new Intl.NumberFormat('en-UK').format(pack.purchaseCount * pack.prices._collection.COINS.amount)
+					packContainers[i].appendChild(utils.stringToHTML(`<hr>`))
+					packContainers[i].appendChild(utils.stringToHTML(`<p class="description avoidLoop">Pack opended: <b>${purchased}</b></p>`))
+					packContainers[i].appendChild(utils.stringToHTML(`<p class="description">Coins value: <b>${totalCost}</b></p>`))
+				}
+			}
+		}, UTStoreView.Event.TAB_SELECTED)
 	},
 	UTClubHubViewController: function(){
 	},
@@ -186,6 +200,7 @@ var nav = new Navigation();
 nav.init()
 
 
+
 document.addEventListener('keydown', (e) => {
 	if(e.target.nodeName.toLowerCase() === "input"){
 		return;
@@ -237,35 +252,10 @@ window.XMLHttpRequest.prototype.open = function (method, url, async, user, pass)
 		} else if (this.responseURL.includes('fut.ea.com/ut/game/fifa20/tradepile')) {
 			// console.log(this.responseText)
 		} else if (this.responseURL.includes('fut.ea.com/ut/game/fifa20/store/purchaseGroup/cardpack')) {
-			// console.log(this.responseText)
-			showPackStatistics(JSON.parse(this.responseText));
+			// 
 		}
 	}
 }, false);
 
 	old_Open.call(this, method, url, async, user, pass);
 };
-
-
-
-function showPackStatistics(data) {
-	var storeContainer = document.querySelector(".ut-store-hub-view--content");
-	const observer = new MutationObserver(() => {
-		var loop = storeContainer.querySelectorAll(".avoidLoop").length > 0;
-		if (loop) {
-			return;
-		}
-		var packContainers = document.querySelectorAll(".ut-store-pack-details-view");
-		for (let [key, value] of Object.entries(data.purchase)) {
-			var packContainer = document.getElementById(value.id);
-			if(packContainer){
-				var purchased = new Intl.NumberFormat('en-UK').format(value.purchaseCount)
-				var totalCost = new Intl.NumberFormat('en-UK').format(value.purchaseCount * value.coins)
-				packContainer.appendChild(utils.stringToHTML(`<hr>`))
-				packContainer.appendChild(utils.stringToHTML(`<p class="description avoidLoop">Pack opended: <b>${purchased}</b></p>`))
-				packContainer.appendChild(utils.stringToHTML(`<p class="description">Coins value: <b>${totalCost}</b></p>`))
-			}
-		}
-	});
-	observer.observe(storeContainer, { attributes: true, childList: true, subtree: true });
-}
